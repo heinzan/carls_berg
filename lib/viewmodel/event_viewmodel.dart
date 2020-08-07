@@ -23,4 +23,16 @@ class EventViewModel extends BaseViewModel{
     return success;
 
   }
+
+  Future<bool> insertPoint(int eventId , int employeeId , int point) async{
+    var success = await api.insertPoint(eventId, employeeId, point);
+    return success;
+  }
+
+  Future<bool> redeemPoint(String  employeeId , String redeemPoint) async{
+    int id =int.parse(employeeId) ;
+    int point = int.parse(redeemPoint);
+    var success = await api.redeemPoint(id, point);
+    return success;
+  }
 }

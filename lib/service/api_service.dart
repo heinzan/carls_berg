@@ -46,7 +46,7 @@ class Api {
         {"employee_card_id": employeeId, "redeem_point": point});
 
     response =
-    await dio.post(AppConstant.BASEURL + " point/redeem", data: formData);
+    await dio.post(AppConstant.BASEURL + "point/redeem", data: formData);
 
     var success = response.statusCode == 200;
     return success;

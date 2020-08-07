@@ -19,7 +19,9 @@ class _StateHomeView extends State<HomeView> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Carlsberg' , style: TextStyle(color: Colors.white),),
+
+        title: Text('Create Event' , style: TextStyle(color: Colors.white),),
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 40 , left: 20 , right: 20),

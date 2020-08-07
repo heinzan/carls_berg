@@ -23,7 +23,11 @@ class _StateCreateEventView extends State<CreateEventView> {
       create: (context) => EventViewModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Event'),
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          title: Text('Create Event' , style: TextStyle(color: Colors.white),),
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -88,6 +92,9 @@ class _StateCreateEventView extends State<CreateEventView> {
                 builder: (context, model, child) {
                   return Container(
                     child: RaisedButton(
+
+                        color: Colors.green,
+                        child: Text("Create" , style: TextStyle(color: Colors.white),),
                         onPressed: () async {
                           var success = await model.createEvent(
                               _eventNameController.text, _pointController.text,
@@ -119,32 +126,32 @@ class _StateCreateEventView extends State<CreateEventView> {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       child: Column(
                         children: <Widget>[
-                          Text("Successful", style: TextStyle(
+                          Text("Successfully created an event.", style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              color: Colors.green),),
-                          Padding(padding: EdgeInsets.only(top: 16)),
-                          Text("You created new Event.")
+                              color: Colors.green ,
+                              fontSize: 18),),
+
                         ],
                       ),
                     ),
 
                     SizedBox(
-                      width: 320.0,
                       child: RaisedButton(
+                        color: Colors.green,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                         child: Text(
-                          "Ok",
+                          "OK",
                           style: TextStyle(color: Colors.white),
                         ),
-                        color: Colors.lightGreen,
+
                       ),
                     )
                   ],
