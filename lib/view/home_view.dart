@@ -20,7 +20,7 @@ class _StateHomeView extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
 
-        title: Text('Create Event' , style: TextStyle(color: Colors.white),),
+        title: Text('Home' , style: TextStyle(color: Colors.white),),
         centerTitle: true,
       ),
       body: Padding(

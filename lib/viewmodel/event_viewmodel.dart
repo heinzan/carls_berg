@@ -7,6 +7,7 @@ class EventViewModel extends BaseViewModel{
   Api api = Api();
   List<EventModel> tempList = List<EventModel>();
   List<EventModel> eventList = List<EventModel>();
+  DateTime  pickDate;
 
   Future getEventList() async{
 

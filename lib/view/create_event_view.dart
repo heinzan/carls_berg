@@ -40,11 +40,12 @@ class _StateCreateEventView extends State<CreateEventView> {
 
                   elevation: 5.0,
                   child: TextField(
+                    style: TextStyle(height: 1.5),
+
                     maxLines: null,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
                             left: 12.0, bottom: 12, top: 6),
-
                         labelText: 'Event name',
                         fillColor: Colors.green,
                         focusColor: Colors.green,
@@ -98,10 +99,12 @@ class _StateCreateEventView extends State<CreateEventView> {
                         onPressed: () async {
                           var success = await model.createEvent(
                               _eventNameController.text, _pointController.text,
-                              _pointController.text);
+                              _dateController.text);
                           if (success) {
                             model.getEventList();
                             showSuccessDialog(context);
+                          }else{
+                            showErrorDialog(context);
                           }
                         }),
                   );
@@ -161,5 +164,53 @@ class _StateCreateEventView extends State<CreateEventView> {
           );
         });
     Navigator.pop(context);
+  }
+
+  void showErrorDialog(BuildContext context) async{
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 130,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Text("Something wrong.Please try again", style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.red ,
+                              fontSize: 18),),
+
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(
+                      child: RaisedButton(
+                        color: Colors.red,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          "Try again",
+                          style: TextStyle(color: Colors.white),
+                        ),
+
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

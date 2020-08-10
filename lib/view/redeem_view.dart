@@ -9,6 +9,7 @@ import 'package:carlsberg/viewmodel/event_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class RedeemView extends StatefulWidget{
@@ -120,18 +121,17 @@ class _StateRedeemView extends State<RedeemView>{
                       color: Colors.green,
                       onPressed: () async{
                         var success =await model.redeemPoint(scanResult.rawContent, _pointController.text);
-                        if(success){
                           if(success){
                             showSuccessDialog(context);
                           }
-                        }
+
                       },
                       child: Text('REDEEM')),
                 ),
               ],
             ),
             floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.camera),
+                child: Icon(FontAwesomeIcons.qrcode),
                 onPressed: () {
                   scan();
                 }),

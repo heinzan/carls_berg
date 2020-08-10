@@ -9,6 +9,7 @@ import 'package:carlsberg/viewmodel/event_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ScanView extends StatefulWidget {
@@ -73,12 +74,14 @@ class _StateScanView extends State<ScanView> {
             body: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: 12 , right: 12 , top: 6),
+                  padding: EdgeInsets.only(left: 12 , right: 12 , top: 20),
                   child: Card(
                     margin: EdgeInsets.all(8),
                     child: Column(
                       children: <Widget>[
                         Padding(padding: EdgeInsets.only(top: 16)),
+                      //  Text(widget.eventName , style: TextStyle(color: Colors.green  , fontSize: 16),),
+
                         Row(
                           children: <Widget>[
                             Padding(padding: EdgeInsets.only(left: 60)),
@@ -117,17 +120,22 @@ class _StateScanView extends State<ScanView> {
                       textColor: Colors.white,
                       color: Colors.green,
                       onPressed: () async{
-                        var success = await model.insertPoint(widget.eventId, int.parse(scanResult.rawContent) , widget.eventPoint);
-                        if(success){
-                          showSuccessDialog(context);
+                        if(scanResult ==null){
+                          showErrorDialog(context);
+                        }else{
+                          var success = await model.insertPoint(widget.eventId, int.parse(scanResult.rawContent) , widget.eventPoint);
+                          if(success){
+                            showSuccessDialog(context);
+                          }
                         }
+
                       },
                       child: Text('Ok')),
                 ),
               ],
             ),
             floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.camera),
+                child: Icon(FontAwesomeIcons.qrcode),
                 onPressed: () {
                   scan();
                 }),
@@ -211,6 +219,54 @@ class _StateScanView extends State<ScanView> {
                     },
                     child: Text(
                       "OK",
+                      style: TextStyle(color: Colors.white),
+                    ),
+
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  void showErrorDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)), //this right here
+        child: Container(
+          height: 130,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Text("Something wrong.Please try again", style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.red ,
+                          fontSize: 18),),
+
+                    ],
+                  ),
+                ),
+
+                SizedBox(
+                  child: RaisedButton(
+                    color: Colors.red,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Try again",
                       style: TextStyle(color: Colors.white),
                     ),
 

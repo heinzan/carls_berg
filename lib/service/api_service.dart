@@ -19,7 +19,7 @@ class Api {
 
   Future<bool> createEvent(String eventName, int point, String date) async {
     FormData formData = FormData.fromMap(
-        {"event_name": eventName, "event_point": point, "event_date": "2020-08-31"});
+        {"event_name": eventName, "event_point": point, "event_date": date});
 
     response =
         await dio.post(AppConstant.BASEURL + "event/create", data: formData);

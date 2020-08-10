@@ -77,34 +77,39 @@ class _StateEventView extends State<EventView> {
                                 ),
                               ),
                               Padding(padding: EdgeInsets.only(left: 4)),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(4),
+                              Flexible(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Expanded(
                                       child: Text(
                                         model.eventList[index].eventName,
-                                        maxLines: 4,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
+                                          height: 1.2,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(4),
-                                    child: Text(
-                                      model.eventList[index].eventDate,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
+                                    Container(
+                                      padding: EdgeInsets.all(4),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            model.eventList[index].eventDate,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               )
                             ],
                           ),
