@@ -1,5 +1,6 @@
 import 'package:carlsberg/viewmodel/event_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CreateEventView extends StatefulWidget{
@@ -12,6 +13,7 @@ class CreateEventView extends StatefulWidget{
 }
 
 class _StateCreateEventView extends State<CreateEventView> {
+  DateTime selectedDate = DateTime.now();
   TextEditingController _eventNameController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _pointController = TextEditingController();
@@ -60,15 +62,21 @@ class _StateCreateEventView extends State<CreateEventView> {
                 child: Material(
                   elevation: 5.0,
                   child: TextField(
+                    onTap: (){
+                      pickDate(context);
+                    },
+                    controller: _dateController,
+
+                    showCursor: false,
+                    readOnly: true,
+
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 12.0),
-
-                        labelText: 'Event date',
+                        labelText: 'Select Date',
                         fillColor: Colors.green,
                         focusColor: Colors.green,
                         hoverColor: Colors.green,
                         border: InputBorder.none),
-                    controller: _dateController,
                   ),
                 ),
               ),
@@ -77,6 +85,10 @@ class _StateCreateEventView extends State<CreateEventView> {
                 child: Material(
                   elevation: 5.0,
                   child: TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      WhitelistingTextInputFormatter.digitsOnly
+                    ],
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 12.0),
 
@@ -212,5 +224,18 @@ class _StateCreateEventView extends State<CreateEventView> {
             ),
           );
         });
+  }
+
+  void pickDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        _dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
+      });
   }
 }

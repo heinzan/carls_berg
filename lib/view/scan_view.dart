@@ -125,6 +125,9 @@ class _StateScanView extends State<ScanView> {
                         }else{
                           var success = await model.insertPoint(widget.eventId, int.parse(scanResult.rawContent) , widget.eventPoint);
                           if(success){
+                            setState(() {
+                              scanResult = null;
+                            });
                             showSuccessDialog(context);
                           }
                         }

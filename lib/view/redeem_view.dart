@@ -12,16 +12,15 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class RedeemView extends StatefulWidget{
+class RedeemView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _StateRedeemView();
   }
-
 }
 
-class _StateRedeemView extends State<RedeemView>{
+class _StateRedeemView extends State<RedeemView> {
   ScanResult scanResult;
 
   final _flashOnController = TextEditingController(text: "Flash on");
@@ -57,19 +56,22 @@ class _StateRedeemView extends State<RedeemView>{
     return ChangeNotifierProvider(
       create: (context) => EventViewModel(),
       child: Consumer<EventViewModel>(
-        builder: (context , model , child){
+        builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
               iconTheme: IconThemeData(
                 color: Colors.white, //change your color here
               ),
-              title: Text('Redeem' , style: TextStyle(color: Colors.white),),
+              title: Text(
+                'Redeem',
+                style: TextStyle(color: Colors.white),
+              ),
               centerTitle: true,
             ),
             body: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: 12 , right: 12 , top: 6),
+                  padding: EdgeInsets.only(left: 12, right: 12, top: 6),
                   child: Card(
                     margin: EdgeInsets.all(8),
                     child: Column(
@@ -80,13 +82,25 @@ class _StateRedeemView extends State<RedeemView>{
                             Padding(padding: EdgeInsets.only(left: 60)),
                             Expanded(
                               flex: 1,
-                              child: Text('Employee ID' , style: TextStyle(fontWeight: FontWeight.w700 , fontSize: 18),),
+                              child: Text(
+                                'Employee ID',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 18),
+                              ),
                             ),
                             Expanded(
                                 flex: 1,
-                                child: Text(scanResult != null
-                                    ? scanResult.rawContent
-                                    : "00000" , style: TextStyle(fontWeight: FontWeight.w400 , fontSize: 18)))
+                                child: Text(
+                                    scanResult != null
+                                        ? scanResult.rawContent
+                                        : "00000",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18))),
+
+                            Expanded(
+                                flex: 1,
+                                child: Text('Check point')
                           ],
                         ),
                         Padding(padding: EdgeInsets.only(top: 12)),
@@ -95,19 +109,40 @@ class _StateRedeemView extends State<RedeemView>{
                             Padding(padding: EdgeInsets.only(left: 60)),
                             Expanded(
                               flex: 1,
-                              child: Text('Point' ,style: TextStyle(fontWeight: FontWeight.w700 , fontSize: 18)),
+                              child: Text('Available point',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18)),
+                            ),
+                            Expanded(
+                                flex: 1,
+                                child: Text("30"))
+                          ],
+                        ),
+                        Padding(padding: EdgeInsets.only(top: 12)),
+                        Row(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.only(left: 60)),
+                            Expanded(
+                              flex: 1,
+                              child: Text('Point',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18)),
                             ),
                             Expanded(
                                 flex: 1,
                                 child: TextField(
-                                  decoration: new InputDecoration(border: InputBorder.none,
-                                    hintText: 'Enter point',),
-
-                                    keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    WhitelistingTextInputFormatter.digitsOnly
+                                  ],
+                                  decoration: new InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Enter point',
+                                  ),
+                                  keyboardType: TextInputType.number,
                                   controller: _pointController,
-                                )
-
-                            )
+                                ))
                           ],
                         ),
                         Padding(padding: EdgeInsets.only(bottom: 12)),
@@ -119,12 +154,12 @@ class _StateRedeemView extends State<RedeemView>{
                   child: FlatButton(
                       textColor: Colors.white,
                       color: Colors.green,
-                      onPressed: () async{
-                        var success =await model.redeemPoint(scanResult.rawContent, _pointController.text);
-                          if(success){
-                            showSuccessDialog(context);
-                          }
-
+                      onPressed: () async {
+                        var success = await model.redeemPoint(
+                            scanResult.rawContent, _pointController.text);
+                        if (success) {
+                          showSuccessDialog(context);
+                        }
                       },
                       child: Text('REDEEM')),
                 ),
@@ -159,6 +194,7 @@ class _StateRedeemView extends State<RedeemView>{
       );
 
       var result = await BarcodeScanner.scan(options: options);
+
 
       setState(() => scanResult = result);
     } on PlatformException catch (e) {
@@ -198,26 +234,29 @@ class _StateRedeemView extends State<RedeemView>{
                     Container(
                       child: Column(
                         children: <Widget>[
-                          Text("Successful redeem point", style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.green ,
-                          fontSize: 18),),
-
+                          Text(
+                            "Successful redeem point",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.green,
+                                fontSize: 18),
+                          ),
                         ],
                       ),
                     ),
-
                     SizedBox(
                       child: RaisedButton(
                         color: Colors.green,
                         onPressed: () {
+                          setState(() {
+                            scanResult = null;
+                          });
                           Navigator.of(context).pop();
                         },
                         child: Text(
                           "OK",
                           style: TextStyle(color: Colors.white),
                         ),
-
                       ),
                     )
                   ],

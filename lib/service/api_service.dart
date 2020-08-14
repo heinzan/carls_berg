@@ -1,4 +1,5 @@
 import 'package:carlsberg/app_constant.dart';
+import 'package:carlsberg/model/available_point_modae.dart';
 import 'package:carlsberg/model/event_model.dart';
 import 'package:carlsberg/model/event_response.dart';
 import 'package:dio/dio.dart';
@@ -50,6 +51,10 @@ class Api {
 
     var success = response.statusCode == 200;
     return success;
+  }
+
+  Future<AvailablePoint> checkPoint(int employeeId) async{
+
   }
 
 

@@ -36,4 +36,8 @@ class EventViewModel extends BaseViewModel{
     var success = await api.redeemPoint(id, point);
     return success;
   }
+
+  Future checkPoint(String employeeId) async{
+
+  }
 }
